@@ -62,7 +62,7 @@ body::before{content:'';position:fixed;inset:0;
   background:rgba(2,6,8,0.97);border-top:1px solid var(--border);
   backdrop-filter:blur(24px);display:flex;}
 .bni{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:9px 2px calc(6px);gap:3px;cursor:pointer;background:none;border:none;
+  padding:10px 2px 16px;gap:3px;cursor:pointer;background:none;border:none;
   transition:all 0.14s;position:relative;}
 .bni-icon{font-size:21px;transition:transform 0.15s;}
 .bni-label{font-family:var(--mono);font-size:11px;letter-spacing:0.1em;color:var(--muted);transition:color 0.14s;}
@@ -75,7 +75,7 @@ body::before{content:'';position:fixed;inset:0;
 /* ─── MAIN ─── */
 .main{position:fixed;
   top:calc(52px + var(--st));
-  bottom:calc(58px + var(--sb));
+  bottom:calc(76px + var(--sb));
   left:0;right:0;overflow-y:auto;-webkit-overflow-scrolling:touch;z-index:1;}
 .view{display:none;padding:14px 14px 24px;}
 .view.active{display:block;}
@@ -235,7 +235,7 @@ body::before{content:'';position:fixed;inset:0;
 .ftab.active{border-color:var(--border2);color:var(--cyan);background:rgba(0,255,160,0.07);}
 
 /* ─── FAB ─── */
-.fab{position:fixed;bottom:calc(68px + var(--sb));right:16px;z-index:190;
+.fab{position:fixed;bottom:calc(86px + var(--sb));right:16px;z-index:190;
   width:52px;height:52px;border-radius:50%;border:none;cursor:pointer;
   background:linear-gradient(135deg,var(--cyan),#00cc80);
   color:var(--bg);font-size:26px;font-weight:300;
@@ -281,13 +281,141 @@ body::before{content:'';position:fixed;inset:0;
 .empty-txt{font-family:var(--mono);font-size:14px;color:var(--muted);line-height:1.7;}
 
 /* ─── TOAST ─── */
-#toast{position:fixed;left:50%;transform:translateX(-50%) translateY(70px);
-  bottom:calc(70px + var(--sb));z-index:999;
+#toast{position:fixed;left:50%;transform:translateX(-50%) translateY(130px);
+  bottom:calc(86px + var(--sb));z-index:999;opacity:0;pointer-events:none;
   background:var(--panel);border:1px solid var(--border2);border-radius:10px;
   padding:10px 20px;font-family:var(--mono);font-size:14px;color:var(--cyan);
-  transition:transform 0.22s;white-space:nowrap;box-shadow:0 4px 24px rgba(0,0,0,0.6);}
-#toast.show{transform:translateX(-50%) translateY(0);}
+  transition:transform 0.25s,opacity 0.25s;white-space:nowrap;
+  box-shadow:0 4px 24px rgba(0,0,0,0.6);}
+#toast.show{transform:translateX(-50%) translateY(0);opacity:1;pointer-events:auto;}
 #toast.err{color:var(--red);border-color:rgba(255,68,85,0.3);}
+
+
+/* ─── 6-MONTH P&L CHART ─── */
+.chart-wrap{display:flex;align-items:flex-end;gap:5px;height:80px;}
+.chart-col{flex:1;display:flex;flex-direction:column;align-items:center;}
+.chart-bars{display:flex;gap:2px;align-items:flex-end;width:100%;height:66px;}
+.chart-bar{flex:1;border-radius:3px 3px 0 0;min-height:2px;transition:height 0.3s;}
+.chart-bar.cb-inc{background:rgba(0,255,160,0.65);}
+.chart-bar.cb-cost{background:rgba(255,68,85,0.6);}
+.chart-mo{font-family:var(--mono);font-size:9px;color:var(--muted);margin-top:3px;}
+.chart-legend{display:flex;gap:10px;margin-top:7px;}
+.chart-leg-item{display:flex;align-items:center;gap:4px;font-family:var(--mono);font-size:9px;color:var(--muted);}
+.chart-leg-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0;}
+
+/* ─── SEARCH ─── */
+.search-wrap{position:relative;margin-bottom:9px;}
+.search-input{width:100%;background:var(--bg2);border:1px solid var(--border);
+  border-radius:8px;padding:9px 11px 9px 34px;font-family:var(--mono);font-size:13px;
+  color:var(--text);outline:none;-webkit-appearance:none;}
+.search-input:focus{border-color:var(--border2);}
+.search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);
+  color:var(--muted);font-size:13px;pointer-events:none;}
+
+/* ─── CATEGORY BREAKDOWN ─── */
+.cat-breakdown{background:var(--bg2);border:1px solid var(--border);
+  border-radius:10px;padding:11px;margin-top:8px;}
+.cat-breakdown-title{font-family:var(--mono);font-size:10px;letter-spacing:0.15em;
+  color:var(--muted);text-transform:uppercase;margin-bottom:8px;}
+.cat-row{display:flex;justify-content:space-between;align-items:center;
+  padding:4px 0;border-bottom:1px solid var(--border);}
+.cat-row:last-child{border-bottom:none;}
+.cat-row-lbl{font-family:var(--mono);font-size:13px;color:var(--muted);}
+.cat-row-val{font-family:var(--mono);font-size:14px;color:var(--text);font-weight:600;}
+.cat-row-bar{height:3px;background:var(--border);border-radius:2px;
+  margin-top:2px;overflow:hidden;}
+.cat-row-fill{height:100%;border-radius:2px;transition:width 0.4s;}
+
+/* ─── GOAL PROGRESS ─── */
+.goal-card{background:var(--panel);border:1px solid var(--border);
+  border-radius:12px;padding:14px;margin-bottom:10px;}
+.goal-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.goal-lbl{font-family:var(--mono);font-size:12px;letter-spacing:0.15em;
+  color:var(--cyandim);text-transform:uppercase;}
+.goal-set-btn{font-family:var(--mono);font-size:10px;padding:4px 10px;
+  border-radius:6px;border:1px solid var(--border);background:transparent;
+  color:var(--muted);cursor:pointer;transition:all 0.12s;}
+.goal-set-btn:active{border-color:var(--cyan);color:var(--cyan);}
+.goal-track{background:var(--bg2);border-radius:6px;height:10px;overflow:hidden;margin-bottom:6px;}
+.goal-fill{height:100%;border-radius:6px;transition:width 0.5s;
+  background:linear-gradient(90deg,var(--cyan),#00cc80);}
+.goal-fill.over{background:linear-gradient(90deg,var(--amber),#ff8800);}
+.goal-nums{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--muted);}
+.goal-pct{font-family:var(--disp);font-size:20px;font-weight:900;color:var(--cyan);}
+.goal-pct.over{color:var(--amber);}
+
+/* ─── ANNUAL BURN BANNER ─── */
+.annual-banner{background:rgba(255,68,85,0.04);border:1px solid rgba(255,68,85,0.15);
+  border-radius:10px;padding:11px 13px;margin-bottom:10px;
+  display:flex;align-items:center;justify-content:space-between;}
+.ab-lbl{font-family:var(--mono);font-size:11px;letter-spacing:0.12em;
+  color:var(--muted);text-transform:uppercase;}
+.ab-val{font-family:var(--disp);font-size:18px;font-weight:700;color:var(--red);}
+.ab-sub{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:2px;}
+
+
+/* ─── VIEW TOGGLE (LIST | REPORTS) ─── */
+.view-toggle{display:flex;gap:0;margin-bottom:11px;border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.vt-btn{flex:1;font-family:var(--mono);font-size:12px;letter-spacing:0.1em;padding:8px 4px;
+  background:transparent;border:none;color:var(--muted);cursor:pointer;transition:all 0.13s;}
+.vt-btn.active{background:rgba(0,255,160,0.09);color:var(--cyan);}
+
+/* ─── REPORTS PANEL ─── */
+.rpt-period-row{display:flex;gap:5px;margin-bottom:12px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:2px;}
+.rpt-period-row::-webkit-scrollbar{display:none;}
+.rpt-btn{font-family:var(--mono);font-size:11px;letter-spacing:0.08em;padding:5px 11px;
+  border-radius:6px;border:1px solid var(--border);background:transparent;
+  color:var(--muted);cursor:pointer;transition:all 0.12s;white-space:nowrap;flex-shrink:0;}
+.rpt-btn.active{border-color:var(--border2);color:var(--cyan);background:rgba(0,255,160,0.07);}
+
+.rpt-stat-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;}
+.rpt-stat{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:10px 11px;}
+.rpt-stat-lbl{font-family:var(--mono);font-size:10px;letter-spacing:0.1em;color:var(--muted);
+  margin-bottom:5px;text-transform:uppercase;}
+.rpt-stat-val{font-family:var(--disp);font-size:21px;font-weight:900;color:var(--bright);line-height:1;}
+.rpt-stat-val.red{color:var(--red);}
+.rpt-stat-val.grn{color:var(--cyan);}
+.rpt-stat-sub{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:3px;}
+
+/* ─── SPARKLINE BAR CHART ─── */
+.spark-wrap{display:flex;align-items:flex-end;gap:4px;height:60px;margin-bottom:4px;}
+.spark-col{flex:1;display:flex;flex-direction:column;align-items:center;}
+.spark-bar{width:100%;border-radius:3px 3px 0 0;min-height:2px;transition:height 0.3s;
+  background:rgba(255,68,85,0.55);}
+.spark-bar.grn{background:rgba(0,255,160,0.55);}
+.spark-lbl{font-family:var(--mono);font-size:8px;color:var(--muted);margin-top:3px;white-space:nowrap;}
+
+/* ─── BREAKDOWN TABLE ─── */
+.bk-table{background:var(--panel);border:1px solid var(--border);border-radius:11px;
+  overflow:hidden;margin-bottom:10px;}
+.bk-table-hdr{display:flex;justify-content:space-between;padding:8px 12px;
+  background:rgba(0,255,160,0.04);border-bottom:1px solid var(--border);}
+.bk-table-hdr span{font-family:var(--mono);font-size:10px;letter-spacing:0.1em;
+  color:var(--cyandim);text-transform:uppercase;}
+.bk-row{display:flex;align-items:center;justify-content:space-between;
+  padding:8px 12px;border-bottom:1px solid var(--border);}
+.bk-row:last-child{border-bottom:none;}
+.bk-row-lbl{font-family:var(--mono);font-size:13px;color:var(--text);}
+.bk-row-sub{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:1px;}
+.bk-row-val{font-family:var(--mono);font-size:14px;font-weight:600;color:var(--red);}
+.bk-row-val.grn{color:var(--cyan);}
+.bk-row-val.muted{color:var(--muted);}
+.bk-bar-col{flex:1;margin:0 10px;}
+.bk-bar-bg{background:var(--bg2);border-radius:3px;height:5px;overflow:hidden;}
+.bk-bar-fill{height:100%;border-radius:3px;background:rgba(255,68,85,0.5);transition:width 0.4s;}
+.bk-bar-fill.grn{background:rgba(0,255,160,0.5);}
+
+/* ─── TXN ROW edit mode ─── */
+.txn-row.editable{cursor:pointer;}
+.txn-row.editable:active{border-color:var(--border2);}
+.txn-edit-btn{background:none;border:none;color:var(--muted);font-size:13px;cursor:pointer;
+  padding:4px 5px;flex-shrink:0;border-radius:5px;}
+.txn-edit-btn:active{color:var(--cyan);}
+
+/* ─── ASSET BADGE ─── */
+.asset-badge{font-family:var(--mono);font-size:10px;padding:1px 6px;border-radius:4px;
+  background:rgba(56,189,248,0.12);color:var(--blue);border:1px solid rgba(56,189,248,0.25);
+  margin-left:5px;display:inline-block;vertical-align:middle;}
 
 /* scrollbar */
 ::-webkit-scrollbar{width:2px;}
@@ -461,6 +589,16 @@ body::before{content:'';position:fixed;inset:0;
         <div class="stat-val c-amber" id="d-pnl">$0</div>
         <div class="stat-sub">income − all costs</div>
       </div>
+      <div class="stat">
+        <div class="stat-lbl">Today Spent</div>
+        <div class="stat-val c-red" id="d-today-exp">$0</div>
+        <div class="stat-sub">expenses + subs today</div>
+      </div>
+      <div class="stat">
+        <div class="stat-lbl">This Week Spent</div>
+        <div class="stat-val" id="d-week-exp">$0</div>
+        <div class="stat-sub">Sun – today</div>
+      </div>
     </div>
 
     <!-- Tax Countdown -->
@@ -478,6 +616,17 @@ body::before{content:'';position:fixed;inset:0;
       <div id="d-renewals"></div>
     </div>
 
+    <!-- Goal Progress -->
+    <div class="goal-card" id="d-goal-card">
+      <div class="goal-top">
+        <span class="goal-lbl">⬡ Monthly Revenue Goal</span>
+        <button class="goal-set-btn" onclick="openGoalModal()">Set Goal</button>
+      </div>
+      <div id="d-goal-body">
+        <div style="font-family:var(--mono);font-size:11px;color:var(--muted);">Tap Set Goal to track your monthly target</div>
+      </div>
+    </div>
+
     <!-- YTD -->
     <div class="card">
       <div class="sec-lbl">Year-to-Date Summary</div>
@@ -486,10 +635,27 @@ body::before{content:'';position:fixed;inset:0;
       <div class="ytd-row"><span class="ytd-lbl">Subscriptions YTD</span><span class="ytd-val" id="ytd-sub">$0.00</span></div>
       <div class="ytd-row"><span class="ytd-lbl">Net Profit YTD</span><span class="ytd-val hi" id="ytd-net">$0.00</span></div>
     </div>
+
+    <!-- 6-Month P&L Chart -->
+    <div class="card">
+      <div class="sec-lbl">6-Month P&amp;L</div>
+      <div class="chart-wrap" id="d-chart"></div>
+      <div class="chart-legend">
+        <div class="chart-leg-item"><span class="chart-leg-dot" style="background:rgba(0,255,160,0.65);"></span>Income</div>
+        <div class="chart-leg-item"><span class="chart-leg-dot" style="background:rgba(255,68,85,0.6);"></span>Costs</div>
+      </div>
+    </div>
   </div>
 
   <!-- SUBSCRIPTIONS -->
   <div class="view" id="view-subs">
+    <div class="annual-banner" id="annual-banner">
+      <div>
+        <div class="ab-lbl">Annual Subscription Burn</div>
+        <div class="ab-sub" id="annual-sub-count">active paid subscriptions</div>
+      </div>
+      <div class="ab-val" id="annual-burn-val">$0</div>
+    </div>
     <div class="ftabs">
       <button class="ftab active" onclick="setSubFilter('all',this)">All</button>
       <button class="ftab" onclick="setSubFilter('ai',this)">AI Tools</button>
@@ -502,28 +668,52 @@ body::before{content:'';position:fixed;inset:0;
 
   <!-- EXPENSES -->
   <div class="view" id="view-exp">
-    <div class="ftabs">
-      <button class="ftab active" onclick="setTxnFilter('exp','all',this)">All</button>
-      <button class="ftab" onclick="setTxnFilter('exp','month',this)">This Month</button>
-      <button class="ftab" onclick="setTxnFilter('exp','quarter',this)">Quarter</button>
-      <button class="ftab" onclick="setTxnFilter('exp','year',this)">YTD</button>
+    <div class="view-toggle">
+      <button class="vt-btn active" id="exp-vt-list" onclick="setExpViewMode('list')">⊞ LIST</button>
+      <button class="vt-btn" id="exp-vt-reports" onclick="setExpViewMode('reports')">◈ REPORTS</button>
     </div>
-    <div id="exp-list"></div>
+    <div id="exp-list-pane">
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input class="search-input" type="search" placeholder="Search expenses…" id="exp-search" oninput="expSearch=this.value.toLowerCase();renderExp()"/>
+      </div>
+      <div class="ftabs" id="exp-ftabs">
+        <button class="ftab active" onclick="setTxnFilter('exp','today',this)">Today</button>
+        <button class="ftab" onclick="setTxnFilter('exp','week',this)">Week</button>
+        <button class="ftab" onclick="setTxnFilter('exp','month',this)">Month</button>
+        <button class="ftab" onclick="setTxnFilter('exp','quarter',this)">Quarter</button>
+        <button class="ftab" onclick="setTxnFilter('exp','year',this)">YTD</button>
+        <button class="ftab" onclick="setTxnFilter('exp','all',this)">All</button>
+      </div>
+      <div id="exp-list"></div>
+    </div>
+    <div id="exp-reports-pane" style="display:none;">
+      <div id="exp-reports"></div>
+    </div>
   </div>
 
   <!-- INCOME -->
   <div class="view" id="view-inc">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input class="search-input" type="search" placeholder="Search income…" id="inc-search" oninput="incSearch=this.value.toLowerCase();renderInc()"/>
+    </div>
     <div class="ftabs">
-      <button class="ftab active" onclick="setTxnFilter('inc','all',this)">All</button>
-      <button class="ftab" onclick="setTxnFilter('inc','month',this)">This Month</button>
+      <button class="ftab active" onclick="setTxnFilter('inc','today',this)">Today</button>
+      <button class="ftab" onclick="setTxnFilter('inc','week',this)">Week</button>
+      <button class="ftab" onclick="setTxnFilter('inc','month',this)">Month</button>
       <button class="ftab" onclick="setTxnFilter('inc','quarter',this)">Quarter</button>
       <button class="ftab" onclick="setTxnFilter('inc','year',this)">YTD</button>
+      <button class="ftab" onclick="setTxnFilter('inc','all',this)">All</button>
     </div>
     <div id="inc-list"></div>
   </div>
 
   <!-- TAXES -->
   <div class="view" id="view-tax">
+    <div style="display:flex;justify-content:flex-end;margin-bottom:8px;">
+      <button class="goal-set-btn" onclick="openAddQuarterModal()" style="padding:7px 14px;font-size:11px;">+ Add Custom Quarter</button>
+    </div>
     <div class="tax-est">
       <div class="tax-est-title">⬢ ESTIMATED TAX CALCULATOR</div>
       <div class="est-note">Michigan requires quarterly estimated payments — same dates as federal. Enter your expected annual net profit to see what you'll owe each quarter.</div>
@@ -749,13 +939,26 @@ const DEFAULT_QUARTERS = [
   {id:'q226',name:'Q2 2026',period:'Apr 1 – May 31, 2026',due:'2026-06-15',fedPaid:false,miPaid:false,fedAmt:0,miAmt:0,notes:'',dismissed:false},
   {id:'q326',name:'Q3 2026',period:'Jun 1 – Aug 31, 2026',due:'2026-09-15',fedPaid:false,miPaid:false,fedAmt:0,miAmt:0,notes:'',dismissed:false},
   {id:'q426',name:'Q4 2026',period:'Sep 1 – Dec 31, 2026',due:'2027-01-15',fedPaid:false,miPaid:false,fedAmt:0,miAmt:0,notes:'',dismissed:false},
+  {id:'q127',name:'Q1 2027',period:'Jan 1 – Mar 31, 2027',due:'2027-04-15',fedPaid:false,miPaid:false,fedAmt:0,miAmt:0,notes:'',dismissed:false},
+  {id:'q227',name:'Q2 2027',period:'Apr 1 – May 31, 2027',due:'2027-06-15',fedPaid:false,miPaid:false,fedAmt:0,miAmt:0,notes:'',dismissed:false},
+  {id:'q327',name:'Q3 2027',period:'Jun 1 – Aug 31, 2027',due:'2027-09-15',fedPaid:false,miPaid:false,fedAmt:0,miAmt:0,notes:'',dismissed:false},
+  {id:'q427',name:'Q4 2027',period:'Sep 1 – Dec 31, 2027',due:'2028-01-15',fedPaid:false,miPaid:false,fedAmt:0,miAmt:0,notes:'',dismissed:false},
+  {id:'q128',name:'Q1 2028',period:'Jan 1 – Mar 31, 2028',due:'2028-04-15',fedPaid:false,miPaid:false,fedAmt:0,miAmt:0,notes:'',dismissed:false},
+  {id:'q228',name:'Q2 2028',period:'Apr 1 – May 31, 2028',due:'2028-06-15',fedPaid:false,miPaid:false,fedAmt:0,miAmt:0,notes:'',dismissed:false},
+  {id:'q328',name:'Q3 2028',period:'Jun 1 – Aug 31, 2028',due:'2028-09-15',fedPaid:false,miPaid:false,fedAmt:0,miAmt:0,notes:'',dismissed:false},
+  {id:'q428',name:'Q4 2028',period:'Sep 1 – Dec 31, 2028',due:'2029-01-15',fedPaid:false,miPaid:false,fedAmt:0,miAmt:0,notes:'',dismissed:false},
 ];
 
 /* ═══════════════════════════════════════════════
    STATE
 ═══════════════════════════════════════════════ */
 let curView = 'dash';
-let subFilter = 'all', expFilter = 'all', incFilter = 'all';
+let subFilter = 'all', expFilter = 'today', incFilter = 'all';
+let expSearch = '', incSearch = '';
+let expViewMode = 'list'; // 'list' | 'reports'
+let rptPeriod = 'month'; // reports period
+let monthGoal = ld('mk2_goal', 0);
+function saveGoal(){ sv('mk2_goal', monthGoal); }
 let modalMode = '', editId = null;
 // Calendar
 let calYear = new Date().getFullYear(), calMonth = new Date().getMonth();
@@ -792,6 +995,16 @@ function goView(v, btn) {
   document.getElementById('view-'+v).classList.add('active');
   if(btn) btn.classList.add('active');
   document.getElementById('fab').style.display = ['dash','tax','cal','data'].includes(v) ? 'none' : 'flex';
+  // when navigating to spend, default to 'today' filter and list mode
+  if(v==='exp'){
+    if(expFilter==='all') { expFilter='today'; }
+    setExpViewMode(expViewMode); // restore view mode state
+    // sync tab active state
+    document.querySelectorAll('#exp-ftabs .ftab').forEach((b,i)=>{
+      const pMap=['today','week','month','quarter','year','all'];
+      b.classList.toggle('active', pMap[i]===expFilter);
+    });
+  }
   render();
 }
 
@@ -804,6 +1017,7 @@ function render() {
   if(curView==='tax')     renderTax();
   if(curView==='cal')     renderCal();
   if(curView==='notes')   renderNotes();
+  if(curView==='subs')    renderAnnualBurn();
   updateTaxDot();
 }
 
@@ -831,9 +1045,11 @@ function monthlyBurn() {
 }
 
 function sumPeriod(arr, period) {
-  const now = new Date();
+  const now = new Date(); const n0 = new Date(now); n0.setHours(0,0,0,0);
   return arr.filter(item=>{
     const d = new Date(item.date+'T12:00:00');
+    if(period==='today'){return d.getFullYear()===n0.getFullYear()&&d.getMonth()===n0.getMonth()&&d.getDate()===n0.getDate();}
+    if(period==='week'){const wd=n0.getDay();const start=new Date(n0);start.setDate(n0.getDate()-wd);return d>=start;}
     if(period==='month') return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear();
     if(period==='quarter'){const q=Math.floor(now.getMonth()/3);return Math.floor(d.getMonth()/3)===q&&d.getFullYear()===now.getFullYear();}
     if(period==='year') return d.getFullYear()===now.getFullYear();
@@ -844,10 +1060,47 @@ function sumPeriod(arr, period) {
 function fmt(n){return '$'+Math.abs(n).toFixed(2);}
 
 const CAT_ICONS = {
-  'AI Tools':'🤖','Hosting':'🖥','Domain':'🌐','Software':'💾',
-  'Payment Processing':'💳','Marketing':'📣','Legal':'⚖','Equipment':'🔧',
-  'Education':'📚','Office':'🏢','Other':'📦',
-  'Paddle Sales':'💰','Consulting':'💼','Product Sales':'🛍','Freelance':'⚡','Other Income':'✦'
+  /* expenses */
+  'AI Tools':'🤖',
+  'Hosting & Infrastructure':'🖥',
+  'Domain & DNS':'🌐',
+  'Software & Licenses':'💾',
+  'Hardware & Equipment':'🔧',
+  'Peripherals & Accessories':'🎛',
+  'Audio / Video Gear':'🎙',
+  'Payment Processing':'💳',
+  'Marketing & Ads':'📣',
+  'Legal & Professional':'⚖',
+  'Accounting & Finance':'🧾',
+  'Contractors & Freelancers':'👤',
+  'Education & Training':'📚',
+  'Phone & Internet':'📱',
+  'Office & Supplies':'🏢',
+  'Travel & Transportation':'🚗',
+  'Meals & Entertainment':'🍔',
+  'Bank & Transaction Fees':'🏦',
+  'Insurance':'🛡',
+  'Taxes & Fees':'🏛',
+  'Shipping & Packaging':'📦',
+  'Subscriptions':'↻',
+  'Other':'📦',
+  /* legacy mapping */
+  'Equipment':'🔧',
+  'Hosting':'🖥',
+  'Domain':'🌐',
+  'Software':'💾',
+  'Marketing':'📣',
+  'Legal':'⚖',
+  'Office':'🏢',
+  /* income */
+  'Paddle Sales':'💰',
+  'Consulting':'💼',
+  'Product Sales':'🛍',
+  'Freelance':'⚡',
+  'Client Retainer':'🔄',
+  'Affiliate / Referral':'🔗',
+  'Grants & Awards':'🏆',
+  'Other Income':'✦'
 };
 
 /* ═══════════════════════════════════════════════
@@ -867,6 +1120,14 @@ function renderDash() {
   pEl.textContent = (pnl>=0?'+':'-') + fmt(pnl);
   pEl.className = 'stat-val ' + (pnl>=0?'c-green':'c-red');
 
+  // Today / Week tiles
+  const todayExp = sumPeriod(expenses,'today');
+  const weekExp  = sumPeriod(expenses,'week');
+  const todayEl = document.getElementById('d-today-exp');
+  const weekEl  = document.getElementById('d-week-exp');
+  if(todayEl) todayEl.textContent = fmt(todayExp);
+  if(weekEl)  weekEl.textContent  = fmt(weekExp);
+
   // YTD
   const ytdI = sumPeriod(incomes,'year');
   const ytdE = sumPeriod(expenses,'year');
@@ -882,6 +1143,9 @@ function renderDash() {
 
   renderTaxCountdown();
   renderRenewals();
+  renderGoalProgress();
+  renderMonthlyChart();
+  renderAnnualBurn();
 }
 
 function renderTaxCountdown() {
@@ -949,6 +1213,7 @@ function setSubFilter(f,btn){
 }
 
 function renderSubs() {
+  renderAnnualBurn();
   const el = document.getElementById('subs-list');
   const list = subFilter==='all' ? subs : subs.filter(s=>s.cat===subFilter);
   const groups = {ai:[],service:[],payment:[],other:[]};
@@ -1000,28 +1265,58 @@ function setTxnFilter(type,f,btn){
 
 function renderExp(){
   const el = document.getElementById('exp-list');
-  const list = filterByPeriod(expenses,expFilter).sort((a,b)=>new Date(b.date)-new Date(a.date));
+  let list = filterByPeriod(expenses,expFilter);
+  if(expSearch) list = list.filter(e=>(e.name+' '+e.cat+' '+(e.vendor||'')+' '+(e.notes||'')).toLowerCase().includes(expSearch));
+  list = list.sort((a,b)=>new Date(b.date)-new Date(a.date));
   const tot = list.reduce((s,e)=>s+parseFloat(e.amount||0),0);
-  if(!list.length){el.innerHTML=`<div class="empty"><div class="empty-icon">↓</div><div class="empty-txt">No expenses logged<br>Tap + to add one</div></div>`;return;}
+  const deductTot = list.reduce((s,e)=>s+parseFloat(e.amount||0)*((e.deduct??100)/100),0);
+  const periodLabels={'today':'Today','week':'This Week','month':'This Month','quarter':'This Quarter','year':'This Year','all':'All Time'};
+  if(!list.length){el.innerHTML=`<div class="empty"><div class="empty-icon">↓</div><div class="empty-txt">${expSearch?'No results for "'+expSearch+'"':'No expenses yet for '+periodLabels[expFilter]+'<br>Tap + to add one'}</div></div>`;return;}
+  const catTotals = {};
+  list.forEach(e=>{catTotals[e.cat]=(catTotals[e.cat]||0)+parseFloat(e.amount||0);});
+  const maxCat = Math.max(...Object.values(catTotals),1);
+  const catHtml = Object.entries(catTotals).sort((a,b)=>b[1]-a[1]).map(([cat,v])=>`
+    <div class="cat-row">
+      <div>
+        <div class="cat-row-lbl">${CAT_ICONS[cat]||'📦'} ${cat}</div>
+        <div class="cat-row-bar"><div class="cat-row-fill" style="width:${(v/maxCat*100).toFixed(1)}%;background:rgba(255,68,85,0.55);"></div></div>
+      </div>
+      <div class="cat-row-val">$${v.toFixed(2)}</div>
+    </div>`).join('');
   el.innerHTML = `<div style="display:flex;justify-content:space-between;margin-bottom:8px;padding:0 2px;">
-    <span style="font-family:var(--mono);font-size:11px;color:var(--muted);">${list.length} items</span>
+    <span style="font-family:var(--mono);font-size:11px;color:var(--muted);">${list.length} item${list.length!==1?'s':''} · tap to edit</span>
     <span style="font-family:var(--disp);font-size:14px;font-weight:700;color:var(--red);">-$${tot.toFixed(2)}</span>
-  </div>` + list.map(e=>`<div class="txn-row">
+  </div>
+  ${deductTot<tot?`<div style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:8px;">Deductible: <span style="color:var(--cyan);">$${deductTot.toFixed(2)}</span></div>`:''}
+  ` + list.map(e=>`<div class="txn-row editable" onclick="openExpModal('${e.id}')">
     <div class="txn-ico" style="background:rgba(255,68,85,0.08);border-color:rgba(255,68,85,0.2);">${CAT_ICONS[e.cat]||'📦'}</div>
     <div class="txn-info">
-      <div class="txn-name">${e.name}</div>
-      <div class="txn-meta">${e.cat} · ${fmtDate(e.date)}</div>
+      <div class="txn-name">${e.name}${e.assettype==='asset'?'<span class="asset-badge">ASSET</span>':''}</div>
+      <div class="txn-meta">${e.cat}${e.vendor?' · '+e.vendor:''} · ${fmtDate(e.date)}${(e.deduct??100)<100?' · '+e.deduct+'% deduct':''}</div>
     </div>
     <div class="txn-amt neg">-$${parseFloat(e.amount).toFixed(2)}</div>
-    <button class="txn-del" onclick="delItem('exp','${e.id}')">✕</button>
-  </div>`).join('');
+  </div>`).join('')
+  + (Object.keys(catTotals).length>1?`<div class="cat-breakdown"><div class="cat-breakdown-title">By Category</div>${catHtml}</div>`:'');
 }
 
 function renderInc(){
   const el = document.getElementById('inc-list');
-  const list = filterByPeriod(incomes,incFilter).sort((a,b)=>new Date(b.date)-new Date(a.date));
+  let list = filterByPeriod(incomes,incFilter);
+  if(incSearch) list = list.filter(i=>(i.name+' '+i.cat+' '+(i.notes||'')).toLowerCase().includes(incSearch));
+  list = list.sort((a,b)=>new Date(b.date)-new Date(a.date));
   const tot = list.reduce((s,i)=>s+parseFloat(i.amount||0),0);
-  if(!list.length){el.innerHTML=`<div class="empty"><div class="empty-icon">↑</div><div class="empty-txt">No income logged<br>Tap + to add one</div></div>`;return;}
+  if(!list.length){el.innerHTML=`<div class="empty"><div class="empty-icon">↑</div><div class="empty-txt">${incSearch?'No results for "'+incSearch+'"':'No income logged<br>Tap + to add one'}</div></div>`;return;}
+  const srcTotals = {};
+  list.forEach(i=>{srcTotals[i.cat]=(srcTotals[i.cat]||0)+parseFloat(i.amount||0);});
+  const maxSrc = Math.max(...Object.values(srcTotals),1);
+  const srcHtml = Object.entries(srcTotals).sort((a,b)=>b[1]-a[1]).map(([cat,v])=>`
+    <div class="cat-row">
+      <div>
+        <div class="cat-row-lbl">${CAT_ICONS[cat]||'✦'} ${cat}</div>
+        <div class="cat-row-bar"><div class="cat-row-fill" style="width:${(v/maxSrc*100).toFixed(1)}%;background:rgba(0,255,160,0.55);"></div></div>
+      </div>
+      <div class="cat-row-val" style="color:var(--cyan);">$${v.toFixed(2)}</div>
+    </div>`).join('');
   el.innerHTML = `<div style="display:flex;justify-content:space-between;margin-bottom:8px;padding:0 2px;">
     <span style="font-family:var(--mono);font-size:11px;color:var(--muted);">${list.length} items</span>
     <span style="font-family:var(--disp);font-size:14px;font-weight:700;color:var(--cyan);">+$${tot.toFixed(2)}</span>
@@ -1033,13 +1328,16 @@ function renderInc(){
     </div>
     <div class="txn-amt pos">+$${parseFloat(i.amount).toFixed(2)}</div>
     <button class="txn-del" onclick="delItem('inc','${i.id}')">✕</button>
-  </div>`).join('');
+  </div>`).join('')
+  + (Object.keys(srcTotals).length>1?`<div class="cat-breakdown"><div class="cat-breakdown-title">By Source</div>${srcHtml}</div>`:'');
 }
 
 function filterByPeriod(arr,p){
-  const now=new Date();
+  const now=new Date(); now.setHours(0,0,0,0);
   return arr.filter(item=>{
     const d=new Date(item.date+'T12:00:00');
+    if(p==='today'){const t=new Date(now);return d.getFullYear()===t.getFullYear()&&d.getMonth()===t.getMonth()&&d.getDate()===t.getDate();}
+    if(p==='week'){const wd=now.getDay();const start=new Date(now);start.setDate(now.getDate()-wd);return d>=start;}
     if(p==='month') return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear();
     if(p==='quarter'){const q=Math.floor(now.getMonth()/3);return Math.floor(d.getMonth()/3)===q&&d.getFullYear()===now.getFullYear();}
     if(p==='year') return d.getFullYear()===now.getFullYear();
@@ -1160,7 +1458,7 @@ function updateTaxDot(){
 function openAdd(){
   editId=null;
   if(curView==='subs')    openSubModal(null);
-  else if(curView==='exp') openExpModal();
+  else if(curView==='exp') openExpModal(null);
   else if(curView==='inc') openIncModal();
   else if(curView==='notes') openNoteEditor(null);
 }
@@ -1251,21 +1549,42 @@ function delSub(id){
   subs=subs.filter(s=>s.id!==id);saveSubs();closeModal();renderSubs();renderDash();toast('Subscription removed');
 }
 
-function openExpModal(){
-  modalMode='exp';
-  document.getElementById('modal-title').textContent='Log Expense';
+function openExpModal(id){
+  const e = id ? expenses.find(x=>x.id===id) : null;
+  editId = id||null; modalMode='exp';
+  document.getElementById('modal-title').textContent = e ? 'Edit Expense' : 'Log Expense';
+  const cats = ['AI Tools','Audio / Video Gear','Hosting & Infrastructure','Domain & DNS',
+    'Software & Licenses','Hardware & Equipment','Peripherals & Accessories',
+    'Payment Processing','Marketing & Ads','Legal & Professional',
+    'Accounting & Finance','Contractors & Freelancers','Education & Training',
+    'Phone & Internet','Office & Supplies','Travel & Transportation',
+    'Meals & Entertainment','Bank & Transaction Fees','Insurance',
+    'Taxes & Fees','Shipping & Packaging','Subscriptions','Other'];
+  const opts = cats.map(c=>`<option${e?.cat===c?' selected':''}>${c}</option>`).join('');
   document.getElementById('modal-body').innerHTML=`
-    <div class="fld"><label>Description</label><input type="text" id="m-name" placeholder="e.g. Domain renewal, software license…"/></div>
+    <div class="fld"><label>Description</label>
+      <input type="text" id="m-name" value="${e?.name||''}" placeholder="e.g. Mackie Onyx, domain renewal…"/></div>
     <div class="fld-2">
-      <div class="fld"><label>Amount ($)</label><input type="number" id="m-amount" placeholder="0.00" step="0.01"/></div>
-      <div class="fld"><label>Date</label><input type="date" id="m-date" value="${today()}"/></div>
+      <div class="fld"><label>Amount ($)</label>
+        <input type="number" id="m-amount" value="${e?.amount||''}" placeholder="0.00" step="0.01"/></div>
+      <div class="fld"><label>Date</label>
+        <input type="date" id="m-date" value="${e?.date||today()}"/></div>
     </div>
-    <div class="fld"><label>Category</label><select id="m-cat">
-      <option>AI Tools</option><option>Hosting</option><option>Domain</option><option>Software</option>
-      <option>Payment Processing</option><option>Marketing</option><option>Legal</option>
-      <option>Equipment</option><option>Education</option><option>Office</option><option>Other</option>
-    </select></div>
-    <div class="fld"><label>Notes</label><textarea id="m-notes" placeholder="Receipt #, vendor, details…"></textarea></div>`;
+    <div class="fld"><label>Category</label><select id="m-cat">${opts}</select></div>
+    <div class="fld"><label>Vendor / Store</label>
+      <input type="text" id="m-vendor" value="${e?.vendor||''}" placeholder="e.g. Amazon, Best Buy, B&H…"/></div>
+    <div class="fld-2">
+      <div class="fld"><label>Deductible %</label>
+        <input type="number" id="m-deduct" value="${e?.deduct??100}" placeholder="100" min="0" max="100" step="5"/></div>
+      <div class="fld"><label>Type</label><select id="m-assettype">
+        <option value="expense"${(e?.assettype||'expense')==='expense'?' selected':''}>Operating Expense</option>
+        <option value="asset"${e?.assettype==='asset'?' selected':''}>Capital Asset (depreciable)</option>
+      </select></div>
+    </div>
+    <div class="fld"><label>Notes / Receipt #</label>
+      <textarea id="m-notes" placeholder="Receipt #, order ID, warranty info…">${e?.notes||''}</textarea></div>
+    ${id?`<button style="width:100%;margin-top:8px;font-family:var(--mono);font-size:9px;padding:9px;border-radius:8px;border:1px solid rgba(255,68,85,0.3);background:rgba(255,68,85,0.06);color:var(--red);cursor:pointer;" onclick="delItem('exp','${id}');closeModal()">Delete Expense</button>`:''}
+  `;
   openModal();
 }
 
@@ -1280,7 +1599,8 @@ function openIncModal(){
     </div>
     <div class="fld"><label>Source</label><select id="m-cat">
       <option>Paddle Sales</option><option>Consulting</option><option>Product Sales</option>
-      <option>Freelance</option><option>Other Income</option>
+      <option>Freelance</option><option>Client Retainer</option>
+      <option>Affiliate / Referral</option><option>Grants & Awards</option><option>Other Income</option>
     </select></div>
     <div class="fld"><label>Notes</label><textarea id="m-notes" placeholder="Order ID, client, transaction…"></textarea></div>`;
   openModal();
@@ -1320,6 +1640,8 @@ function doSave(){
   else if(modalMode==='inc') saveIncItem();
   else if(modalMode==='tax') saveTaxItem();
   else if(modalMode==='calnote') saveCalNoteItem();
+  else if(modalMode==='goal') saveGoalItem();
+  else if(modalMode==='addquarter') saveAddQuarterItem();
 }
 
 function saveSub(){
@@ -1346,8 +1668,17 @@ function saveExpItem(){
   const amount=parseFloat(document.getElementById('m-amount')?.value||0);
   const date=document.getElementById('m-date')?.value;
   if(!name||!amount||!date){toast('Fill in all fields',true);return;}
-  expenses.push({id:'e'+Date.now(),name,amount,date,cat:document.getElementById('m-cat')?.value||'Other',notes:document.getElementById('m-notes')?.value||''});
-  saveExp();closeModal();renderExp();renderDash();toast('Expense logged');
+  const item={
+    id:editId||'e'+Date.now(), name, amount, date,
+    cat:document.getElementById('m-cat')?.value||'Other',
+    vendor:document.getElementById('m-vendor')?.value||'',
+    deduct:parseFloat(document.getElementById('m-deduct')?.value??100),
+    assettype:document.getElementById('m-assettype')?.value||'expense',
+    notes:document.getElementById('m-notes')?.value||''
+  };
+  if(editId){const i=expenses.findIndex(e=>e.id===editId);if(i>=0)expenses[i]=item;}
+  else expenses.push(item);
+  saveExp();closeModal();renderExp();renderDash();toast(editId?'Expense updated':'Expense logged');
 }
 
 function saveIncItem(){
@@ -1377,8 +1708,13 @@ function today(){return new Date().toISOString().split('T')[0];}
 let toastT;
 function toast(msg,err=false){
   const t=document.getElementById('toast');
-  t.textContent=msg;t.className=(err?'err ':'')+'show';
-  clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2600);
+  t.textContent=msg;
+  t.classList.remove('show','err');
+  void t.offsetWidth; // force reflow so animation restarts
+  if(err) t.classList.add('err');
+  t.classList.add('show');
+  clearTimeout(toastT);
+  toastT=setTimeout(()=>t.classList.remove('show'),2800);
 }
 
 
@@ -1898,6 +2234,330 @@ function clearDataSection(type) {
   toast(`${labels[type]} cleared`);
 }
 
+
+
+
+/* ═══════════════════════════════════════════════
+   EXPENSE VIEW MODE + REPORTS
+═══════════════════════════════════════════════ */
+function setExpViewMode(mode) {
+  expViewMode = mode;
+  document.getElementById('exp-list-pane').style.display  = mode==='list'    ? '' : 'none';
+  document.getElementById('exp-reports-pane').style.display = mode==='reports' ? '' : 'none';
+  document.getElementById('exp-vt-list').classList.toggle('active', mode==='list');
+  document.getElementById('exp-vt-reports').classList.toggle('active', mode==='reports');
+  if(mode==='reports') renderExpReports();
+}
+
+function setRptPeriod(p, btn) {
+  rptPeriod = p;
+  document.querySelectorAll('.rpt-btn').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  renderExpReports();
+}
+
+function renderExpReports() {
+  const el = document.getElementById('exp-reports');
+  if(!el) return;
+
+  // build period list
+  const periodBtns = [
+    {k:'today',l:'Today'},{k:'week',l:'This Week'},{k:'month',l:'This Month'},
+    {k:'quarter',l:'Quarter'},{k:'year',l:'YTD'},{k:'all',l:'All Time'}
+  ].map(p=>`<button class="rpt-btn${rptPeriod===p.k?' active':''}" onclick="setRptPeriod('${p.k}',this)">${p.l}</button>`).join('');
+
+  const list = filterByPeriod(expenses, rptPeriod);
+  const tot  = list.reduce((s,e)=>s+parseFloat(e.amount||0),0);
+  const deductTot = list.reduce((s,e)=>s+parseFloat(e.amount||0)*((e.deduct??100)/100),0);
+  const nonDeduct = tot - deductTot;
+  const count = list.length;
+  const largest = count ? Math.max(...list.map(e=>parseFloat(e.amount||0))) : 0;
+  const avgPerItem = count ? tot/count : 0;
+
+  // days in period for avg/day calc
+  const now = new Date(); now.setHours(0,0,0,0);
+  let daysInPeriod = 1;
+  if(rptPeriod==='today') daysInPeriod=1;
+  else if(rptPeriod==='week') daysInPeriod=now.getDay()+1;
+  else if(rptPeriod==='month') daysInPeriod=now.getDate();
+  else if(rptPeriod==='quarter') daysInPeriod=Math.floor((now - new Date(now.getFullYear(),Math.floor(now.getMonth()/3)*3,1))/86400000)+1;
+  else if(rptPeriod==='year') daysInPeriod=Math.floor((now - new Date(now.getFullYear(),0,1))/86400000)+1;
+  else daysInPeriod = list.length ? Math.max(1,Math.ceil((now - new Date(list[list.length-1]?.date+'T12:00:00'))/86400000)) : 1;
+  const avgPerDay = tot / daysInPeriod;
+
+  // ── Category breakdown ──
+  const catTotals = {};
+  list.forEach(e=>{catTotals[e.cat]=(catTotals[e.cat]||0)+parseFloat(e.amount||0);});
+  const sortedCats = Object.entries(catTotals).sort((a,b)=>b[1]-a[1]);
+  const maxCat = sortedCats.length ? sortedCats[0][1] : 1;
+  const catRows = sortedCats.map(([cat,v])=>`
+    <div class="bk-row">
+      <div style="min-width:0;flex:1;margin-right:8px;">
+        <div class="bk-row-lbl" style="font-size:12px;">${CAT_ICONS[cat]||'📦'} ${cat}</div>
+        <div class="bk-bar-bg" style="margin-top:4px;"><div class="bk-bar-fill" style="width:${(v/maxCat*100).toFixed(1)}%;"></div></div>
+      </div>
+      <div>
+        <div class="bk-row-val">$${v.toFixed(2)}</div>
+        <div class="bk-row-sub" style="text-align:right;">${(v/tot*100).toFixed(0)}%</div>
+      </div>
+    </div>`).join('');
+
+  // ── Sparkline: last 7 days or weeks depending on period ──
+  let sparkHtml = '';
+  if(rptPeriod==='today' || rptPeriod==='week') {
+    // last 7 days bars
+    const days7 = [];
+    for(let i=6;i>=0;i--){
+      const d=new Date(now); d.setDate(now.getDate()-i);
+      const ds=dateStr(d);
+      const dayTot=expenses.filter(e=>e.date===ds).reduce((s,e)=>s+parseFloat(e.amount||0),0);
+      const DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+      days7.push({lbl:DOW[d.getDay()],val:dayTot,today:i===0});
+    }
+    const mx7=Math.max(...days7.map(d=>d.val),1);
+    sparkHtml=`<div class="bk-table" style="margin-bottom:10px;">
+      <div class="bk-table-hdr"><span>Daily — Last 7 Days</span></div>
+      <div style="padding:10px 12px;">
+        <div class="spark-wrap">${days7.map(d=>`<div class="spark-col">
+          <div class="spark-bar${d.today?' ':' '}" style="height:${(d.val/mx7*100).toFixed(1)}%;min-height:${d.val>0?'3':'0'}px;" title="$${d.val.toFixed(2)}"></div>
+          <div class="spark-lbl" style="${d.today?'color:var(--cyan)':''}">${d.lbl}</div>
+        </div>`).join('')}</div>
+      </div>
+      ${days7.map(d=>d.val>0?`<div class="bk-row">
+        <div><div class="bk-row-lbl">${d.lbl}</div></div>
+        <div class="bk-row-val">$${d.val.toFixed(2)}</div>
+      </div>`:'').join('')}
+    </div>`;
+  } else if(rptPeriod==='month' || rptPeriod==='quarter') {
+    // last 8 weeks
+    const weeks=[];
+    for(let i=7;i>=0;i--){
+      const wEnd=new Date(now); wEnd.setDate(now.getDate()-i*7);
+      const wStart=new Date(wEnd); wStart.setDate(wEnd.getDate()-6);
+      const wList=expenses.filter(e=>{const d=new Date(e.date+'T12:00:00');return d>=wStart&&d<=wEnd;});
+      const wTot=wList.reduce((s,e)=>s+parseFloat(e.amount||0),0);
+      const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      weeks.push({lbl:mo[wEnd.getMonth()]+' '+wEnd.getDate(),val:wTot});
+    }
+    const mxW=Math.max(...weeks.map(w=>w.val),1);
+    sparkHtml=`<div class="bk-table" style="margin-bottom:10px;">
+      <div class="bk-table-hdr"><span>Weekly — Last 8 Weeks</span></div>
+      <div style="padding:10px 12px;">
+        <div class="spark-wrap">${weeks.map(w=>`<div class="spark-col">
+          <div class="spark-bar" style="height:${(w.val/mxW*100).toFixed(1)}%;min-height:${w.val>0?'3':'0'}px;" title="$${w.val.toFixed(2)}"></div>
+          <div class="spark-lbl">${w.lbl.split(' ')[1]}</div>
+        </div>`).join('')}</div>
+      </div>
+    </div>`;
+  } else {
+    // monthly for year/all
+    const months12=[];
+    const baseYear = rptPeriod==='year' ? now.getFullYear() : (list.length ? new Date(list[list.length-1].date+'T12:00:00').getFullYear() : now.getFullYear());
+    const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    for(let i=0;i<12;i++){
+      const mList=expenses.filter(e=>{const d=new Date(e.date+'T12:00:00');return d.getFullYear()===baseYear&&d.getMonth()===i;});
+      months12.push({lbl:MON[i],val:mList.reduce((s,e)=>s+parseFloat(e.amount||0),0)});
+    }
+    const mxM=Math.max(...months12.map(m=>m.val),1);
+    sparkHtml=`<div class="bk-table" style="margin-bottom:10px;">
+      <div class="bk-table-hdr"><span>Monthly — ${baseYear}</span></div>
+      <div style="padding:10px 12px;">
+        <div class="spark-wrap">${months12.map(m=>`<div class="spark-col">
+          <div class="spark-bar" style="height:${(m.val/mxM*100).toFixed(1)}%;min-height:${m.val>0?'3':'0'}px;" title="$${m.val.toFixed(2)}"></div>
+          <div class="spark-lbl">${m.lbl}</div>
+        </div>`).join('')}</div>
+      </div>
+    </div>`;
+  }
+
+  // ── Top 5 largest single expenses ──
+  const top5 = [...list].sort((a,b)=>parseFloat(b.amount)-parseFloat(a.amount)).slice(0,5);
+  const top5Html = top5.map(e=>`<div class="bk-row">
+    <div style="flex:1;min-width:0;margin-right:8px;">
+      <div class="bk-row-lbl" style="font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${CAT_ICONS[e.cat]||'📦'} ${e.name}${e.assettype==='asset'?' <span class=\"asset-badge\">ASSET</span>':''}</div>
+      <div class="bk-row-sub">${e.vendor?e.vendor+' · ':''}${fmtDate(e.date)}</div>
+    </div>
+    <div class="bk-row-val">$${parseFloat(e.amount).toFixed(2)}</div>
+  </div>`).join('');
+
+  // ── Assets list ──
+  const assets = list.filter(e=>e.assettype==='asset');
+  const assetsHtml = assets.length ? `<div class="bk-table">
+    <div class="bk-table-hdr"><span>Capital Assets (${assets.length})</span><span style="color:var(--blue);">$${assets.reduce((s,e)=>s+parseFloat(e.amount),0).toFixed(2)}</span></div>
+    ${assets.map(e=>`<div class="bk-row">
+      <div style="flex:1;min-width:0;">
+        <div class="bk-row-lbl" style="font-size:12px;">${CAT_ICONS[e.cat]||'🔧'} ${e.name}</div>
+        <div class="bk-row-sub">${e.vendor?e.vendor+' · ':''}${fmtDate(e.date)}</div>
+      </div>
+      <div class="bk-row-val">$${parseFloat(e.amount).toFixed(2)}</div>
+    </div>`).join('')}
+  </div>` : '';
+
+  el.innerHTML = `
+    <div class="rpt-period-row">${periodBtns}</div>
+    <div class="rpt-stat-row">
+      <div class="rpt-stat">
+        <div class="rpt-stat-lbl">Total Spent</div>
+        <div class="rpt-stat-val red">$${tot.toFixed(0)}</div>
+        <div class="rpt-stat-sub">${count} transaction${count!==1?'s':''}</div>
+      </div>
+      <div class="rpt-stat">
+        <div class="rpt-stat-lbl">Per Day (avg)</div>
+        <div class="rpt-stat-val red">$${avgPerDay.toFixed(0)}</div>
+        <div class="rpt-stat-sub">$${avgPerItem.toFixed(0)} per item</div>
+      </div>
+      <div class="rpt-stat">
+        <div class="rpt-stat-lbl">Tax Deductible</div>
+        <div class="rpt-stat-val grn">$${deductTot.toFixed(0)}</div>
+        <div class="rpt-stat-sub">${tot>0?(deductTot/tot*100).toFixed(0):0}% of total</div>
+      </div>
+      <div class="rpt-stat">
+        <div class="rpt-stat-lbl">Largest Purchase</div>
+        <div class="rpt-stat-val red">$${largest.toFixed(0)}</div>
+        <div class="rpt-stat-sub">single expense</div>
+      </div>
+    </div>
+    ${nonDeduct>0?`<div style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:10px;">Non-deductible: <span style="color:var(--amber);">$${nonDeduct.toFixed(2)}</span></div>`:''}
+    ${sparkHtml}
+    ${sortedCats.length ? `<div class="bk-table"><div class="bk-table-hdr"><span>By Category</span><span>${sortedCats.length} categories</span></div>${catRows}</div>` : ''}
+    ${top5.length>0?`<div class="bk-table"><div class="bk-table-hdr"><span>Top Expenses</span></div>${top5Html}</div>`:''}
+    ${assetsHtml}
+  `;
+}
+
+/* ═══════════════════════════════════════════════
+   ANNUAL BURN BANNER
+═══════════════════════════════════════════════ */
+function renderAnnualBurn() {
+  const active = subs.filter(s=>s.active && s.price>0);
+  const annual = active.reduce((sum,s)=>{
+    const p = currentPhasePrice(s);
+    return sum + (s.cycle==='annual' ? p : p*12);
+  },0);
+  const el = document.getElementById('annual-burn-val');
+  const sub = document.getElementById('annual-sub-count');
+  if(el){ el.textContent = '$'+annual.toFixed(0)+'/yr'; }
+  if(sub){ sub.textContent = active.length+' active paid subscription'+(active.length!==1?'s':''); }
+}
+
+/* ═══════════════════════════════════════════════
+   GOAL PROGRESS
+═══════════════════════════════════════════════ */
+function renderGoalProgress() {
+  const body = document.getElementById('d-goal-body');
+  if(!body) return;
+  if(!monthGoal || monthGoal<=0){
+    body.innerHTML='<div style="font-family:var(--mono);font-size:11px;color:var(--muted);">Tap Set Goal to track your monthly target</div>';
+    return;
+  }
+  const inc = sumPeriod(incomes,'month');
+  const pct = Math.min((inc/monthGoal)*100,999);
+  const over = inc >= monthGoal;
+  const now = new Date();
+  const daysInMonth = new Date(now.getFullYear(),now.getMonth()+1,0).getDate();
+  const daysLeft = daysInMonth - now.getDate();
+  const projectedRaw = inc > 0 ? (inc / now.getDate()) * daysInMonth : 0;
+  const projected = projectedRaw.toFixed(0);
+  body.innerHTML = `
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+      <span class="goal-pct ${over?'over':''}">${pct.toFixed(0)}%</span>
+      <span style="font-family:var(--mono);font-size:11px;color:var(--muted);">${daysLeft}d left in month</span>
+    </div>
+    <div class="goal-track">
+      <div class="goal-fill ${over?'over':''}" style="width:${Math.min(pct,100).toFixed(1)}%;"></div>
+    </div>
+    <div class="goal-nums">
+      <span>${'$'+parseFloat(inc).toFixed(0)} earned</span>
+      <span>Goal: $${parseFloat(monthGoal).toFixed(0)}</span>
+    </div>
+    ${projectedRaw>0?`<div style="font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:5px;">Projected month-end: <span style="color:${projectedRaw>=monthGoal?'var(--cyan)':'var(--amber)'}">$${projected}</span> at current pace</div>`:''}`;
+}
+
+function openGoalModal(){
+  modalMode='goal';
+  document.getElementById('modal-title').textContent='Monthly Revenue Goal';
+  document.getElementById('modal-body').innerHTML=`
+    <div class="fld"><label>Monthly Revenue Target ($)</label>
+      <input type="number" id="m-goal" value="${monthGoal||''}" placeholder="e.g. 2000" step="50" min="0"/></div>
+    <div style="font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.6;">
+      Tracks your logged income for the current month against this target. Progress bar appears on the dashboard.</div>`;
+  openModal();
+  setTimeout(()=>document.getElementById('m-goal')?.focus(),120);
+}
+
+function saveGoalItem(){
+  const v = parseFloat(document.getElementById('m-goal')?.value||0);
+  monthGoal = v;
+  saveGoal();
+  closeModal();
+  renderGoalProgress();
+  toast('Goal set to $'+v.toFixed(0));
+}
+
+/* ═══════════════════════════════════════════════
+   6-MONTH P&L CHART
+═══════════════════════════════════════════════ */
+function renderMonthlyChart(){
+  const wrap = document.getElementById('d-chart');
+  if(!wrap) return;
+  const now = new Date();
+  const months=[];
+  for(let i=5;i>=0;i--){
+    let y=now.getFullYear(), m=now.getMonth()-i;
+    if(m<0){m+=12;y--;}
+    months.push({y,m});
+  }
+  const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const data = months.map(({y,m})=>{
+    const inc  = incomes.filter(x=>{const d=new Date(x.date+'T12:00:00');return d.getFullYear()===y&&d.getMonth()===m;}).reduce((s,x)=>s+parseFloat(x.amount||0),0);
+    const exp  = expenses.filter(x=>{const d=new Date(x.date+'T12:00:00');return d.getFullYear()===y&&d.getMonth()===m;}).reduce((s,x)=>s+parseFloat(x.amount||0),0);
+    const subC = subs.filter(s=>s.active).reduce((sum,s)=>{
+      const p=currentPhasePrice(s);
+      return sum+(s.cycle==='annual'?p/12:p);
+    },0);
+    const cost = exp + (y===now.getFullYear()&&m===now.getMonth() ? subC : subC);
+    return {label:MON[m],inc,cost};
+  });
+  const maxVal = Math.max(...data.map(d=>Math.max(d.inc,d.cost)),1);
+  wrap.innerHTML = data.map(d=>`
+    <div class="chart-col">
+      <div class="chart-bars">
+        <div class="chart-bar cb-inc"  style="height:${(d.inc/maxVal*100).toFixed(1)}%;min-height:${d.inc>0?'3px':'0'}" title="Income $${d.inc.toFixed(0)}"></div>
+        <div class="chart-bar cb-cost" style="height:${(d.cost/maxVal*100).toFixed(1)}%;min-height:${d.cost>0?'3px':'0'}" title="Cost $${d.cost.toFixed(0)}"></div>
+      </div>
+      <div class="chart-mo">${d.label}</div>
+    </div>`).join('');
+}
+
+/* ═══════════════════════════════════════════════
+   ADD CUSTOM QUARTER
+═══════════════════════════════════════════════ */
+function openAddQuarterModal(){
+  modalMode='addquarter';
+  document.getElementById('modal-title').textContent='Add Custom Tax Quarter';
+  document.getElementById('modal-body').innerHTML=`
+    <div class="fld"><label>Quarter Name</label>
+      <input type="text" id="m-qname" placeholder="e.g. Q1 2029"/></div>
+    <div class="fld"><label>Period (description)</label>
+      <input type="text" id="m-qperiod" placeholder="e.g. Jan 1 – Mar 31, 2029"/></div>
+    <div class="fld"><label>Due Date</label>
+      <input type="date" id="m-qdue"/></div>
+    <div style="font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.6;">
+      Custom quarters appear in the Tax view and calendar alongside the built-in ones.</div>`;
+  openModal();
+  setTimeout(()=>document.getElementById('m-qname')?.focus(),120);
+}
+
+function saveAddQuarterItem(){
+  const name=(document.getElementById('m-qname')?.value||'').trim();
+  const period=(document.getElementById('m-qperiod')?.value||'').trim();
+  const due=document.getElementById('m-qdue')?.value;
+  if(!name||!due){toast('Name and due date required',true);return;}
+  const id='cq'+Date.now();
+  quarters.push({id,name,period,due,fedPaid:false,miPaid:false,fedAmt:0,miAmt:0,notes:'',dismissed:false});
+  saveTax(); closeModal(); renderTax(); renderDash(); updateTaxDot();
+  toast('Quarter added');
+}
 
 /* ═══════════════════════════════════════════════
    INIT
