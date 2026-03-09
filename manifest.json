@@ -2,7 +2,7 @@
   "name": "Moonskai Biz",
   "short_name": "MK Biz",
   "description": "Moonskai Labs LLC — Business finance tracker, subscriptions, taxes, calendar & notes",
-  "start_url": "./moonskai_biz.html",
+  "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait-primary",
@@ -12,15 +12,15 @@
   "categories": ["finance", "business", "productivity"],
   "icons": [
     {
-      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='96' fill='%23020608'/%3E%3Cpolygon points='256,80 440,184 440,328 256,432 72,328 72,184' fill='none' stroke='%2300ffa0' stroke-width='28'/%3E%3Ctext x='256' y='308' text-anchor='middle' font-size='180' font-family='monospace' fill='%2300ffa0'%3E%24%3C/text%3E%3C/svg%3E",
-      "sizes": "512x512",
-      "type": "image/svg+xml",
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='36' fill='%23020608'/%3E%3Cpolygon points='96,28 168,68 168,124 96,164 24,124 24,68' fill='none' stroke='%2300ffa0' stroke-width='10'/%3E%3Ctext x='96' y='118' text-anchor='middle' font-size='68' font-family='monospace' fill='%2300ffa0'%3E%24%3C/text%3E%3C/svg%3E",
-      "sizes": "192x192",
-      "type": "image/svg+xml",
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
       "purpose": "any maskable"
     }
   ],
@@ -29,19 +29,19 @@
       "name": "Dashboard",
       "short_name": "Dash",
       "description": "Open financial dashboard",
-      "url": "./moonskai_biz.html#dash"
+      "url": "./index.html#dash"
     },
     {
       "name": "Log Expense",
       "short_name": "Expense",
       "description": "Quickly log a new expense",
-      "url": "./moonskai_biz.html#exp"
+      "url": "./index.html#exp"
     },
     {
       "name": "Log Income",
       "short_name": "Income",
       "description": "Quickly log new income",
-      "url": "./moonskai_biz.html#inc"
+      "url": "./index.html#inc"
     }
   ]
 }
