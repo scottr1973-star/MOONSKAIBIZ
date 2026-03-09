@@ -4,13 +4,15 @@
    Strategy: Cache-first for app shell, network-first for data
 ═══════════════════════════════════════════════════════════════ */
 
-const CACHE_NAME   = 'mk-biz-v3';
-const FONT_CACHE   = 'mk-biz-fonts-v1';
+const CACHE_NAME = 'mk-biz-v4';
+const FONT_CACHE = 'mk-biz-fonts-v1';
 
 // Core app shell files to cache on install
 const APP_SHELL = [
-  './moonskai_biz.html',
+  './index.html',
   './manifest.json',
+  './icon-192.png',
+  './icon-512.png',
 ];
 
 // Google Fonts to cache separately (long-lived)
@@ -58,8 +60,15 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // App shell (HTML, manifest) — stale-while-revalidate
-  if (url.pathname.includes('moonskai_biz') || url.pathname.includes('manifest')) {
+  // App shell (HTML, manifest, icons) — stale-while-revalidate
+  if (
+    url.pathname.endsWith('index.html') ||
+    url.pathname.endsWith('manifest.json') ||
+    url.pathname.endsWith('icon-192.png') ||
+    url.pathname.endsWith('icon-512.png') ||
+    url.pathname === '/' ||
+    url.pathname.endsWith('/')
+  ) {
     event.respondWith(staleWhileRevalidate(event.request));
     return;
   }
@@ -127,14 +136,14 @@ self.addEventListener('push', event => {
       badge: './icon-192.png',
       tag: 'mk-tax-reminder',
       renotify: true,
-      data: { url: data.url || './moonskai_biz.html' }
+      data: { url: data.url || './index.html' }
     })
   );
 });
 
 self.addEventListener('notificationclick', event => {
   event.notification.close();
-  event.waitUntil(clients.openWindow(event.notification.data?.url || './moonskai_biz.html'));
+  event.waitUntil(clients.openWindow(event.notification.data?.url || './index.html'));
 });
 
 /* ── OFFLINE FALLBACK PAGE ── */
