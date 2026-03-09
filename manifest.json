@@ -29,19 +29,19 @@
       "name": "Dashboard",
       "short_name": "Dash",
       "description": "Open financial dashboard",
-      "url": "./moonskai_biz.html#dash"
+      "url": "./index.html#dash"
     },
     {
       "name": "Log Expense",
       "short_name": "Expense",
       "description": "Quickly log a new expense",
-      "url": "./moonskai_biz.html#exp"
+      "url": "./index.html#exp"
     },
     {
       "name": "Log Income",
       "short_name": "Income",
       "description": "Quickly log new income",
-      "url": "./moonskai_biz.html#inc"
+      "url": "./index.html#inc"
     }
   ]
 }
