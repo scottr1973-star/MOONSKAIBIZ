@@ -4,15 +4,13 @@
    Strategy: Cache-first for app shell, network-first for data
 ═══════════════════════════════════════════════════════════════ */
 
-const CACHE_NAME = 'mk-biz-v4';
-const FONT_CACHE = 'mk-biz-fonts-v1';
+const CACHE_NAME   = 'mk-biz-v4';
+const FONT_CACHE   = 'mk-biz-fonts-v1';
 
 // Core app shell files to cache on install
 const APP_SHELL = [
   './index.html',
   './manifest.json',
-  './icon-192.png',
-  './icon-512.png',
 ];
 
 // Google Fonts to cache separately (long-lived)
@@ -60,15 +58,8 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // App shell (HTML, manifest, icons) — stale-while-revalidate
-  if (
-    url.pathname.endsWith('index.html') ||
-    url.pathname.endsWith('manifest.json') ||
-    url.pathname.endsWith('icon-192.png') ||
-    url.pathname.endsWith('icon-512.png') ||
-    url.pathname === '/' ||
-    url.pathname.endsWith('/')
-  ) {
+  // App shell (HTML, manifest) — stale-while-revalidate
+  if (url.pathname.includes('index') || url.pathname.includes('manifest')) {
     event.respondWith(staleWhileRevalidate(event.request));
     return;
   }
